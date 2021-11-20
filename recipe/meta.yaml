@@ -9,7 +9,7 @@ package:
 
 source:
   - path: ./
-  - url: https://github.com/conda/conda/archive/cep-menuinst.tar.gz
+  - url: https://github.com/jaimergp/conda/archive/cep-menuinst.tar.gz
     folder: conda_src
     patches:
       - conda_patches/0001-Rename-and-replace-entrypoint-stub-exe.patch
