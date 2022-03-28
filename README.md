@@ -5,7 +5,7 @@ Home: https://github.com/AnacondaRecipes/conda-standalone-feedstock
 
 Package license: BSD-3-Clause
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/conda-standalone-feedstock/blob/master/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/__conda-standalone-feedstock/blob/main/LICENSE.txt)
 
 Summary: Entry point and dependency collection for PyInstaller-based standalone conda.
 
@@ -13,67 +13,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://travis-ci.com/conda-forge/conda-standalone-feedstock">
-        <img alt="macOS" src="https://img.shields.io/travis/com/conda-forge/conda-standalone-feedstock/master.svg?label=macOS">
-      </a>
-    </td>
-  </tr>
-
-  <tr>
-    <td>Azure</td>
-    <td>
-      <details>
-        <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8444&branchName=master">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/conda-standalone-feedstock?branchName=master">
-          </a>
-        </summary>
-        <table>
-          <thead><tr><th>Variant</th><th>Status</th></tr></thead>
-          <tbody><tr>
-              <td>linux_64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8444&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/conda-standalone-feedstock?branchName=master&jobName=linux&configuration=linux_64_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8444&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/conda-standalone-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8444&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/conda-standalone-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8444&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/conda-standalone-feedstock?branchName=master&jobName=osx&configuration=osx_64_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8444&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/conda-standalone-feedstock?branchName=master&jobName=win&configuration=win_64_" alt="variant">
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </details>
-    </td>
-  </tr>
+<table>
 </table>
 
 Current release info
@@ -93,16 +33,41 @@ conda config --add channels napari
 conda config --set channel_priority strict
 ```
 
-Once the `napari` channel has been enabled, `conda-standalone` can be installed with:
+Once the `napari` channel has been enabled, `conda-standalone` can be installed with `conda`:
 
 ```
 conda install conda-standalone
 ```
 
-It is possible to list all of the versions of `conda-standalone` available on your platform with:
+or with `mamba`:
+
+```
+mamba install conda-standalone
+```
+
+It is possible to list all of the versions of `conda-standalone` available on your platform with `conda`:
 
 ```
 conda search conda-standalone --channel napari
+```
+
+or with `mamba`:
+
+```
+mamba search conda-standalone --channel napari
+```
+
+Alternatively, `mamba repoquery` may provide more information:
+
+```
+# Search all versions available on your platform:
+mamba repoquery search conda-standalone --channel napari
+
+# List packages depending on `conda-standalone`:
+mamba repoquery whoneeds conda-standalone --channel napari
+
+# List dependencies of `conda-standalone`:
+mamba repoquery depends conda-standalone --channel napari
 ```
 
 

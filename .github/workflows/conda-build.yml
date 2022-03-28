@@ -19,7 +19,7 @@ jobs:
         include:
           - CONFIG: linux_64_
             UPLOAD_PACKAGES: True
-            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
+            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
             os: ubuntu
           - CONFIG: win_64_
             UPLOAD_PACKAGES: True
@@ -78,14 +78,14 @@ jobs:
       - name: Install Miniconda for windows
         uses: conda-incubator/setup-miniconda@v2
         with:
-          miniconda-version: latest
+          miniforge-version: latest
+          miniforge-variant: Mambaforge
         if: matrix.os == 'windows'
-
       - name: Build on windows
         shell: cmd
         run: |
           call activate base
-          conda.exe install -c conda-forge 'python=3.6' conda-build conda "conda-forge-ci-setup=3" pip boa
+          mamba.exe install -c conda-forge 'python=3.9' conda-build conda pip boa conda-forge-ci-setup=3
           if errorlevel 1 exit 1
           setup_conda_rc .\ ".\recipe" .\.ci_support\%CONFIG%.yaml
           if errorlevel 1 exit 1
