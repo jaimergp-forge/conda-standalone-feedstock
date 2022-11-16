@@ -21,7 +21,7 @@ source:
     #   - menuinst_patches/0001-Do-not-assume-menuinst-wants-to-operate-on-sys.prefi.patch
     #   - menuinst_patches/0002-Allow-menuinst-to-operate-on-non-base-prefix.patch
 
-  - url: https://github.com/jaimergp/menuinst/archive/menuinst-cep.tar.gz
+  - url: https://github.com/jaimergp/constructor/archive/menuinst-cep.tar.gz
     folder: constructor
 
 build:
