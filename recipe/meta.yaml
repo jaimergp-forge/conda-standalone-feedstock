@@ -1,7 +1,7 @@
-{% set version = "4.11a" %}
+{% set version = "22.9.0.post1" %}
 {% set menuinst_version = "2.0a" %}
-{% set constructor_version = "3.1.0" %}
-{% set python_version = "3.7.8" %}
+{% set constructor_version = "3.3.1" %}
+{% set python_version = "3.10.6" %}
 
 package:
   name: conda-standalone
@@ -15,19 +15,14 @@ source:
       - conda_patches/0001-Rename-and-replace-entrypoint-stub-exe.patch
       - conda_patches/0002-Manipulate-PATH-directly-instead-of-_call_ing-conda.patch
 
-  - git_url: https://github.com/jaimergp/menuinst.git
-    git_rev: cep
+  - url: https://github.com/jaimergp/menuinst/archive/cep.tar.gz
     folder: menuinst_src
-    # patches:
-    #   - menuinst_patches/0001-Do-not-assume-menuinst-wants-to-operate-on-sys.prefi.patch
-    #   - menuinst_patches/0002-Allow-menuinst-to-operate-on-non-base-prefix.patch
 
-  - url: https://github.com/conda/constructor/archive/{{ constructor_version }}.tar.gz
-    sha256: 13926446679d1e01c6700c3315916536fe57b461fca0e06fbe32eab9e1ba3657
+  - url: https://github.com/jaimergp/constructor/archive/menuinst-cep.tar.gz
     folder: constructor
 
 build:
-  number: 6
+  number: 0
   ignore_run_exports:
     - '*'
 
@@ -37,7 +32,9 @@ requirements:
     - python ={{ python_version }}
     - conda ={{ version }}
     - conda-package-handling >=1.6
-
+    - menuinst >=2.0a
+  run_constrained:
+    - constructor >=4.0b2
 test:
   commands:
     - ${PREFIX}/standalone_conda/conda.exe -V    # [unix]
@@ -54,7 +51,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - jakirkham
-    - msarahan
-    - forrestwaters
-    - nehaljwani
+    - jaimergp

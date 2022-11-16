@@ -1,12 +1,16 @@
+set -euxo pipefail
+
 # patched conda files
 # new files in patches need to be added here
-for fname in "core/path_actions.py" "utils.py" "core/portability.py" "gateways/disk/update.py"; do
+for fname in "core/path_actions.py" "utils.py"; do
   cp conda_src/conda/${fname} $SP_DIR/conda/${fname}
 done
 
-# # patched menuinst files - windows only, so ignore these
-# cp menuinst_src/menuinst/__init__.py ${SP_DIR}/menuinst/__init__.py
-# cp menuinst_src/menuinst/win32.py ${SP_DIR}/menuinst/win32.py
+# `base` conda might use sigtool, which ships a codesign binary that shadows Apple's one
+# pyinstaller expects that one first in PATH
+if [[ $target_platform == "osx-64" ]]; then
+  ln -s /usr/bin/codesign "$BUILD_PREFIX/bin/codesign"
+fi
 
 # -F is to create a single file
 # -s strips executables and libraries

@@ -6,3 +6,4 @@ conda_forge_output_validation: true
 channels:
   targets:
     - - napari
+upload_on_branch: main
