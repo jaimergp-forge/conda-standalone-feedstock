@@ -15,15 +15,13 @@ source:
       - conda_patches/0001-Rename-and-replace-entrypoint-stub-exe.patch
       - conda_patches/0002-Manipulate-PATH-directly-instead-of-_call_ing-conda.patch
 
-  - git_url: https://github.com/jaimergp/menuinst.git
-    git_rev: cep
+  - url: https://github.com/jaimergp/menuinst/archive/cep.tar.gz
     folder: menuinst_src
     # patches:
     #   - menuinst_patches/0001-Do-not-assume-menuinst-wants-to-operate-on-sys.prefi.patch
     #   - menuinst_patches/0002-Allow-menuinst-to-operate-on-non-base-prefix.patch
 
-  - url: https://github.com/conda/constructor/archive/{{ constructor_version }}.tar.gz
-    sha256: b000dde0ac8641c92f7342362173968505d4e85845be37655b5b9221cb65f3a8
+  - url: https://github.com/jaimergp/menuinst/archive/menuinst-cep.tar.gz
     folder: constructor
 
 build:
@@ -37,7 +35,9 @@ requirements:
     - python ={{ python_version }}
     - conda ={{ version }}
     - conda-package-handling >=1.6
-
+    - menuinst >=2.0a
+  run_constrained:
+    - constructor >=4.0b2
 test:
   commands:
     - ${PREFIX}/standalone_conda/conda.exe -V    # [unix]
@@ -54,7 +54,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - jakirkham
-    - msarahan
-    - forrestwaters
-    - nehaljwani
+    - jaimergp
