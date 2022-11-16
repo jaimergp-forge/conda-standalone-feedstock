@@ -33,16 +33,41 @@ conda config --add channels napari
 conda config --set channel_priority strict
 ```
 
-Once the `napari` channel has been enabled, `conda-standalone` can be installed with:
+Once the `napari` channel has been enabled, `conda-standalone` can be installed with `conda`:
 
 ```
 conda install conda-standalone
 ```
 
-It is possible to list all of the versions of `conda-standalone` available on your platform with:
+or with `mamba`:
+
+```
+mamba install conda-standalone
+```
+
+It is possible to list all of the versions of `conda-standalone` available on your platform with `conda`:
 
 ```
 conda search conda-standalone --channel napari
+```
+
+or with `mamba`:
+
+```
+mamba search conda-standalone --channel napari
+```
+
+Alternatively, `mamba repoquery` may provide more information:
+
+```
+# Search all versions available on your platform:
+mamba repoquery search conda-standalone --channel napari
+
+# List packages depending on `conda-standalone`:
+mamba repoquery whoneeds conda-standalone --channel napari
+
+# List dependencies of `conda-standalone`:
+mamba repoquery depends conda-standalone --channel napari
 ```
 
 
@@ -73,8 +98,5 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
-* [@forrestwaters](https://github.com/forrestwaters/)
-* [@jakirkham](https://github.com/jakirkham/)
-* [@msarahan](https://github.com/msarahan/)
-* [@nehaljwani](https://github.com/nehaljwani/)
+* [@jaimergp](https://github.com/jaimergp/)
 
