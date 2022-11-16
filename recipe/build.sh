@@ -5,6 +5,7 @@ for fname in "core/path_actions.py" "utils.py"; do
 done
 
 # a dependency has a codesign executable that shadows Apple's codesign
+mv "$BUILD_PREFIX/bin/codesign" "$BUILD_PREFIX/bin/codesign.bak"  || true
 mv "$PREFIX/bin/codesign" "$PREFIX/bin/codesign.bak"  || true
 
 # -F is to create a single file
@@ -15,4 +16,5 @@ mv dist/conda.exe $PREFIX/standalone_conda
 # clean up .pyc files that pyinstaller creates
 rm -rf $PREFIX/lib
 
+mv "$BUILD_PREFIX/bin/codesign.bak" "$BUILD_PREFIX/bin/codesign"  || true
 mv "$PREFIX/bin/codesign.bak" "$PREFIX/bin/codesign"  || true
