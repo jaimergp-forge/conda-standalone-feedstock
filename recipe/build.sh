@@ -1,12 +1,14 @@
+set -euxo pipefail
+
 # patched conda files
 # new files in patches need to be added here
 for fname in "core/path_actions.py" "utils.py"; do
   cp conda_src/conda/${fname} $SP_DIR/conda/${fname}
 done
 
-# a dependency has a codesign executable that shadows Apple's codesign
-mv "$BUILD_PREFIX/bin/codesign" "$BUILD_PREFIX/bin/codesign.bak"  || true
-mv "$PREFIX/bin/codesign" "$PREFIX/bin/codesign.bak"  || true
+# `base` conda might use sigtool, which ships a codesign binary that shadows Apple's one
+# pyinstaller expects that one first in PATH
+ln -s /usr/bin/codesign "$BUILD_PREFIX/bin/codesign" || true
 
 # -F is to create a single file
 # -s strips executables and libraries
@@ -15,6 +17,3 @@ mkdir -p $PREFIX/standalone_conda
 mv dist/conda.exe $PREFIX/standalone_conda
 # clean up .pyc files that pyinstaller creates
 rm -rf $PREFIX/lib
-
-mv "$BUILD_PREFIX/bin/codesign.bak" "$BUILD_PREFIX/bin/codesign"  || true
-mv "$PREFIX/bin/codesign.bak" "$PREFIX/bin/codesign"  || true
