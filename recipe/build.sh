@@ -8,7 +8,7 @@ done
 
 # `base` conda might use sigtool, which ships a codesign binary that shadows Apple's one
 # pyinstaller expects that one first in PATH
-if [[ $target_platform == "osx-64" ]]; then
+if [[ $target_platform = "osx-"* ]]; then
   ln -s /usr/bin/codesign "$BUILD_PREFIX/bin/codesign"
 fi
 
