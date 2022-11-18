@@ -4,14 +4,30 @@ import sys
 
 block_cipher = None
 
-datas = []
+# Non imported files need to be added manually via datas or binaries
+# Datas are not analyzed, just copied over. Binaries go through some linkage analysis to also bring necessary libs
+# This includes plain text files like JSON, modules never imported, or standalone binaries
+# Shared objects and DLLs should have been caught by pyinstaller import hooks, but if not, add them
+# Format a list of tuples like (file-path, target-DIRECTORY)
+binaries = []
+datas = [
+    (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'menuinst.menu_item.default.json'), 'menuinst/data'),
+    (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'menuinst.schema.json'), 'menuinst/data'),
+]
 if sys.platform == "win32":
-    datas = [(os.path.join(os.getcwd(), 'constructor', 'constructor', 'nsis', '_nsis.py'), 'Lib'),
-             (os.path.join(os.getcwd(), 'entry_point_base.exe'), '.')]
+    datas += [
+        (os.path.join(os.getcwd(), 'constructor', 'constructor', 'nsis', '_nsis.py'), 'Lib'),
+        (os.path.join(os.getcwd(), 'entry_point_base.exe'), '.'),
+    ]
+elif sys.platform == "darwin":
+    datas += [
+        (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'osx_launcher_arm64'), 'menuinst/data'),
+        (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'osx_launcher_x86_64'), 'menuinst/data'),
+    ]
 
 a = Analysis(['entry_point.py', 'imports.py'],
              pathex=['.'],
-             binaries=[],
+             binaries=binaries,
              datas=datas,
              hiddenimports=['pkg_resources.py2_warn'],
              hookspath=[],
