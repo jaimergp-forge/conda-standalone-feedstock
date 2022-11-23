@@ -33,6 +33,10 @@ if __name__ == '__main__':
                required="True",
                help="path to conda prefix")
        p.add_argument(
+               '--base-prefix',
+               action="store",
+               help="path to base installation, needed for make-menus in non-base envs")
+       p.add_argument(
                '--extract-conda-pkgs',
                action="store_true",
                help="path to conda prefix")
@@ -77,14 +81,15 @@ if __name__ == '__main__':
            t.close()
        if (args.make_menus is not None) or args.rm_menus:
            import importlib.util
-           utility_script = os.path.join(args.prefix, "Lib", "_nsis.py")
+           base_prefix = args.base_prefix or args.prefix
+           utility_script = os.path.join(base_prefix, "Lib", "_nsis.py")
            spec = importlib.util.spec_from_file_location("constructor_utils", utility_script)
            module = importlib.util.module_from_spec(spec)
            spec.loader.exec_module(module)
            if args.make_menus is not None:
-               module.mk_menus(remove=False, prefix=args.prefix, pkg_names=args.make_menus, root_prefix=args.prefix)
+               module.mk_menus(remove=False, prefix=args.prefix, pkg_names=args.make_menus, root_prefix=base_prefix)
            else:
-               module.rm_menus(prefix=args.prefix, root_prefix=args.prefix)
+               module.rm_menus(prefix=args.prefix, root_prefix=base_prefix)
        sys.exit()
     else:
        from conda.cli import main
