@@ -1,6 +1,10 @@
 #!/spare/local/nwani/pyinstaller_stuff/dev/bin/python
 # -*- coding: utf-8 -*-
+import os
+import argparse
 import sys
+import runpy
+from code import InteractiveConsole
 
 from concurrent.futures import Executor
 from multiprocessing import freeze_support
@@ -12,6 +16,7 @@ class DummyExecutor(Executor):
             for thing in iterable:
                 yield func(thing)
 
+
 if __name__ == '__main__':
     freeze_support()
     # https://docs.python.org/3/library/multiprocessing.html#multiprocessing.freeze_support
@@ -21,10 +26,34 @@ if __name__ == '__main__':
         # The standard first entry in sys.path is an empty string,
         # and os.path.abspath('') expands to os.getcwd().
         del sys.path[0]
+        
+    if len(sys.argv) > 1 and sys.argv[1] == 'python':
+        del sys.argv[1]
+        p = argparse.ArgumentParser(description="Python interface emulation.")
+        version = "Python " + ".".join([str(x) for x in sys.version_info[:3]])
+        p.add_argument("-V", "--version", action="version", version=version)
+        group = p.add_mutually_exclusive_group()
+        group.add_argument('-c', '--command', action="store")
+        group.add_argument('-m', '--module', action="store")
+        group.add_argument('script', nargs="?", default=None)
+        args, args_unknown = p.parse_known_args()
+        if args.command:
+            sys.exit(exec(args.command))
+        elif args.module:
+            _ = runpy.run_module(args.module)
+            sys.exit()
+        elif args.script:
+            _ = runpy.run_path(args.script)
+            sys.exit()
+        # else, interactive REPL
+        class CondaStandaloneConsole(InteractiveConsole):
+            pass
+
+        sys.exit(CondaStandaloneConsole().interact(exitmsg=""))
+        
 
     if len(sys.argv) > 1 and sys.argv[1].startswith('constructor'):
-       import os
-       import argparse
+
        from conda.base.constants import CONDA_PACKAGE_EXTENSIONS
        p = argparse.ArgumentParser(description="constructor args")
        p.add_argument(
