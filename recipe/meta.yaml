@@ -1,4 +1,4 @@
-{% set version = "22.9.0.post2" %}
+{% set version = "22.11.1.post1" %}
 {% set menuinst_version = "2.0a" %}
 {% set constructor_version = "3.3.1" %}
 {% set python_version = "3.9.15" %}
@@ -9,7 +9,7 @@ package:
 
 source:
   - path: ./
-  - url: https://github.com/jaimergp/conda/archive/cep-menuinst.tar.gz
+  - url: https://github.com/conda/conda/archive/67da188.tar.gz
     folder: conda_src
     patches:
       - conda_patches/0001-Rename-and-replace-entrypoint-stub-exe.patch
@@ -22,7 +22,7 @@ source:
     folder: constructor
 
 build:
-  number: 0
+  number: 2
   ignore_run_exports:
     - '*'
 
