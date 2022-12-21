@@ -4,6 +4,7 @@ import sys
 import site
 
 block_cipher = None
+sitepackages = site.getsitepackages()[0]
 
 # Non imported files need to be added manually via datas or binaries
 # Datas are not analyzed, just copied over. Binaries go through some linkage analysis to also bring necessary libs
@@ -12,8 +13,8 @@ block_cipher = None
 # Format a list of tuples like (file-path, target-DIRECTORY)
 binaries = []
 datas = [
-    (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'menuinst.menu_item.default.json'), 'menuinst/data'),
-    (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'menuinst.schema.json'), 'menuinst/data'),
+    (os.path.join(sitepackages, 'menuinst', 'data', 'menuinst.menu_item.default.json'), 'menuinst/data'),
+    (os.path.join(sitepackages, 'menuinst', 'data', 'menuinst.schema.json'), 'menuinst/data'),
 ]
 if sys.platform == "win32":
     datas += [
@@ -22,8 +23,8 @@ if sys.platform == "win32":
     ]
 elif sys.platform == "darwin":
     datas += [
-        (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'osx_launcher_arm64'), 'menuinst/data'),
-        (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'osx_launcher_x86_64'), 'menuinst/data'),
+        (os.path.join(sitepackages, 'menuinst', 'data', 'osx_launcher_arm64'), 'menuinst/data'),
+        (os.path.join(sitepackages, 'menuinst', 'data', 'osx_launcher_x86_64'), 'menuinst/data'),
     ]
 
 a = Analysis(['entry_point.py', 'imports.py'],
