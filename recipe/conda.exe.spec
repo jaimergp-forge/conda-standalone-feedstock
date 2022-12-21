@@ -1,6 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 import os
 import sys
+import site
 
 block_cipher = None
 
@@ -11,8 +12,8 @@ block_cipher = None
 # Format a list of tuples like (file-path, target-DIRECTORY)
 binaries = []
 datas = [
-    (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'menuinst.menu_item.default.json'), 'menuinst/data'),
-    (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'menuinst.schema.json'), 'menuinst/data'),
+    (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'menuinst.menu_item.default.json'), 'menuinst/data'),
+    (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'menuinst.schema.json'), 'menuinst/data'),
 ]
 if sys.platform == "win32":
     datas += [
@@ -21,8 +22,8 @@ if sys.platform == "win32":
     ]
 elif sys.platform == "darwin":
     datas += [
-        (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'osx_launcher_arm64'), 'menuinst/data'),
-        (os.path.join(os.getcwd(), 'menuinst_src', 'menuinst', 'data', 'osx_launcher_x86_64'), 'menuinst/data'),
+        (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'osx_launcher_arm64'), 'menuinst/data'),
+        (os.path.join(site.getsitepackages(), 'menuinst', 'data', 'osx_launcher_x86_64'), 'menuinst/data'),
     ]
 
 a = Analysis(['entry_point.py', 'imports.py'],
