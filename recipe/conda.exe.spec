@@ -4,7 +4,11 @@ import sys
 import site
 
 block_cipher = None
-sitepackages = site.getsitepackages()[0]
+# Windows puts sys.prefix in this list first
+sitepackages = next(
+    path for path in site.getsitepackages()
+    if path.endswith("site-packages")
+)
 
 # Non imported files need to be added manually via datas or binaries
 # Datas are not analyzed, just copied over. Binaries go through some linkage analysis to also bring necessary libs
