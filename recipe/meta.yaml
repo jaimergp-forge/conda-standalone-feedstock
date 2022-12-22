@@ -1,8 +1,7 @@
 {% set version = "22.11.1.post1" %}
 {% set menuinst_version = "2.0a" %}
-# This is <build_number>_g<commit hash>
-# as in https://github.com/conda/menuinst/pull/91
-{% set menuinst_build_string = "*_gb7436f1_39" %}
+# g<commit hash> from https://github.com/conda/menuinst/pull/91
+{% set menuinst_build_string = "*_g849938c_40" %}
 {% set constructor_version = "3.3.1" %}
 {% set python_version = "3.9.15" %}
 
