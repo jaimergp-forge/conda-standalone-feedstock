@@ -2,7 +2,7 @@
 {% set menuinst_version = "2.0a" %}
 # This is <build_number>_g<commit hash>
 # as in https://github.com/conda/menuinst/pull/91
-{% set menuinst_build_string = "38_ge820413_*" %}
+{% set menuinst_build_string = "*_gb7436f1_39" %}
 {% set constructor_version = "3.3.1" %}
 {% set python_version = "3.9.15" %}
 
@@ -17,7 +17,6 @@ source:
     patches:
       - conda_patches/0001-Rename-and-replace-entrypoint-stub-exe.patch
       - conda_patches/0002-Manipulate-PATH-directly-instead-of-_call_ing-conda.patch
-
   - url: https://github.com/jaimergp/constructor/archive/menuinst-cep.tar.gz
     folder: constructor
 
@@ -32,7 +31,7 @@ requirements:
     - python ={{ python_version }}
     - conda ={{ version }}
     - conda-package-handling >=1.6
-    - menuinst =2.0a {{ menuinst_build_string }}
+    - menuinst ={{ menuinst_version }} {{ menuinst_build_string }}
   run_constrained:
     - constructor >={{ constructor_version }}
 test:
