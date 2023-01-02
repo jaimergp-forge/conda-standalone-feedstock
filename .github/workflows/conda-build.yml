@@ -27,6 +27,9 @@ jobs:
           - CONFIG: osx_64_
             UPLOAD_PACKAGES: True
             os: macos
+          - CONFIG: osx_arm64_
+            UPLOAD_PACKAGES: True
+            os: macos
     steps:
     - name: Checkout code
       uses: actions/checkout@v3

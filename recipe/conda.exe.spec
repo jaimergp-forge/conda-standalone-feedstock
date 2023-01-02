@@ -10,6 +10,8 @@ sitepackages = next(
     if path.endswith("site-packages")
 )
 
+extra_exe_kwargs = {}
+
 # Non imported files need to be added manually via datas or binaries
 # Datas are not analyzed, just copied over. Binaries go through some linkage analysis to also bring necessary libs
 # This includes plain text files like JSON, modules never imported, or standalone binaries
@@ -30,6 +32,11 @@ elif sys.platform == "darwin":
         (os.path.join(sitepackages, 'menuinst', 'data', 'osx_launcher_arm64'), 'menuinst/data'),
         (os.path.join(sitepackages, 'menuinst', 'data', 'osx_launcher_x86_64'), 'menuinst/data'),
     ]
+    target_platform = os.environ.get("target_platform")
+    if target_platform and target_platform != os.environ.get("build_platform"):
+        extra_exe_kwargs["target_arch"] = "arm64" if target_platform == "osx-arm64" else "x86_64"
+    extra_exe_kwargs["entitlements_file"] = "entitlements.plist"
+
 
 a = Analysis(['entry_point.py', 'imports.py'],
              pathex=['.'],
@@ -59,4 +66,5 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True )
+          console=True,
+          **extra_exe_kwargs)
