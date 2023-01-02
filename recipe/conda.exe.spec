@@ -4,10 +4,14 @@ import sys
 import site
 
 block_cipher = None
-# Windows puts sys.prefix in this list first
-sitepackages = next(
-    path for path in site.getsitepackages()
-    if path.endswith("site-packages")
+sitepackages = os.environ.get(
+    "SP_DIR", # site-packages in conda-build's host environment
+    # if not defined, get running Python's site-packages 
+    # Windows puts sys.prefix in this list first
+    next(
+        path for path in site.getsitepackages()
+        if path.endswith("site-packages")
+    )
 )
 
 extra_exe_kwargs = {}
@@ -50,8 +54,25 @@ a = Analysis(['entry_point.py', 'imports.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
-pyz = PYZ(a.pure, a.zipped_data,
-             cipher=block_cipher)
+
+if "target_arch" in extra_exe_kwargs:
+    # Patch paths for cross-building; assumes IDENTICAL BUILD and HOST environments 
+    for attr in "scripts", "pure", "binaries", "zipfiles", "zipped_data", "datas", "dependencies":
+    # for attr in ("binaries",):
+        toc = getattr(a, attr)
+        new_toc = []
+        for entry in toc:
+            path, abspath, kind = entry
+            if hasattr(abspath, "replace"):
+                new_abspath = abspath.replace(os.environ["BUILD_PREFIX"], os.environ["PREFIX"])
+                if abspath != new_abspath:
+                    print(f"INFO: Patched {path} (BUILD_PREFIX -> PREFIX)")
+                abspath = new_abspath
+            new_toc.append((path, abspath, kind))
+        setattr(a, attr, new_toc)
+
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+
 exe = EXE(pyz,
           a.scripts,
           a.binaries,

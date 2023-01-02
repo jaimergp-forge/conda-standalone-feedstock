@@ -14,9 +14,11 @@ if [[ $target_platform == osx-* && ! -f "$BUILD_PREFIX/bin/codesign" ]]; then
   ln -s /usr/bin/codesign "$BUILD_PREFIX/bin/codesign"
 fi
 
-# -F is to create a single file
-# -s strips executables and libraries
-pyinstaller conda.exe.spec
+if [[ $build_platform != $target_platform ]]; then
+  export PYTHONPATH="$PREFIX/lib/python3.9/site-packages"
+  export PYTHON="$BUILD_PREFIX/bin/python"
+fi
+"${PYTHON}" -m PyInstaller conda.exe.spec
 mkdir -p "$PREFIX/standalone_conda"
 mv dist/conda.exe "$PREFIX/standalone_conda"
 # clean up .pyc files that pyinstaller creates
