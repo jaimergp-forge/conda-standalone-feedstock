@@ -3,7 +3,7 @@
 # g<commit hash> from https://github.com/conda/menuinst/pull/91
 {% set menuinst_build_string = "*_g324250b_41" %}
 {% set constructor_version = "3.3.1" %}
-{% set python_version = "3.9.15" %}
+{% set python_version = "3.9.15" %}  # must match "skip: true" below
 
 package:
   name: conda-standalone
@@ -20,14 +20,25 @@ source:
     folder: constructor
 
 build:
-  number: 4
+  number: 5
+  skip: true  # [py != 39]
   ignore_run_exports:
     - '*'
 
 requirements:
   build:
+    - python {{ python_version }}  # [build_platform != target_platform]
+    # These are not needed technically, but we need them here so the build env
+    # is solved as closely to host as possible
+    - pip  # [build_platform != target_platform]
+    - pyinstaller  # [build_platform != target_platform]
+    - conda ={{ version }}  # [build_platform != target_platform]
+    - conda-package-handling >=1.6  # [build_platform != target_platform]
+    - menuinst ={{ menuinst_version }} {{ menuinst_build_string }}  # [build_platform != target_platform]
+  host:
     - pyinstaller
-    - python ={{ python_version }}
+    - python {{ python_version }}
+    - pip
     - conda ={{ version }}
     - conda-package-handling >=1.6
     - menuinst ={{ menuinst_version }} {{ menuinst_build_string }}
@@ -39,12 +50,12 @@ test:
     - ${PREFIX}/standalone_conda/conda.exe -V    # [unix]
     - ${PREFIX}/standalone_conda/conda.exe python -V    # [unix]
     - ${PREFIX}/standalone_conda/conda.exe create -y -p ./env_test zlib tqdm python={{python_version}}  # [unix]
-    - ${PREFIX}/standalone_conda/conda.exe install -y -p ./env_test napari-menu --no-deps  # [unix]
+    - ${PREFIX}/standalone_conda/conda.exe install -y -p ./env_test napari-menu --no-deps --repodata-fn repodata.json  # [unix]
     - set "CONDA_SOLVER=classic"  # [win]
     - '%PREFIX%\standalone_conda\conda.exe -V'    # [win]
     - '%PREFIX%\standalone_conda\conda.exe python -V'    # [win]
     - '%PREFIX%\standalone_conda\conda.exe create -y -p env_test zlib tqdm python={{python_version}}'    # [win]
-    - '%PREFIX%\standalone_conda\conda.exe install -y -p env_test napari-menu --no-deps'    # [win]
+    - '%PREFIX%\standalone_conda\conda.exe install -y -p env_test napari-menu --no-deps --repodata-fn repodata.json'  # [win]
 
 about:
   home: https://github.com/AnacondaRecipes/conda-standalone-feedstock

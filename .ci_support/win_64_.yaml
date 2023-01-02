@@ -1,6 +1,0 @@
-channel_sources:
-- napari/label/bundle_tools_2,conda-forge
-channel_targets:
-- napari bundle_tools_2
-target_platform:
-- win-64
