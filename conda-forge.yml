@@ -7,3 +7,5 @@ channels:
   targets:
     - - napari
 upload_on_branch: main
+github_actions: 
+  store_build_artifacts: true
