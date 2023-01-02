@@ -55,6 +55,7 @@ a = Analysis(['entry_point.py', 'imports.py'],
              cipher=block_cipher,
              noarchive=False)
 
+
 if "target_arch" in extra_exe_kwargs:
     # Patch paths for cross-building; assumes IDENTICAL BUILD and HOST environments 
     for attr in "scripts", "pure", "binaries", "zipfiles", "zipped_data", "datas", "dependencies":
@@ -64,12 +65,18 @@ if "target_arch" in extra_exe_kwargs:
         for entry in toc:
             path, abspath, kind = entry
             if hasattr(abspath, "replace"):
-                new_abspath = abspath.replace(os.environ["BUILD_PREFIX"], os.environ["PREFIX"])
-                if abspath != new_abspath:
-                    print(f"INFO: Patched {path} (BUILD_PREFIX -> PREFIX)")
-                abspath = new_abspath
+                abspath = abspath.replace(os.environ["BUILD_PREFIX"], os.environ["PREFIX"])
             new_toc.append((path, abspath, kind))
         setattr(a, attr, new_toc)
+
+    # Patch which bootloader is found (pyinstaller will look into its sys.prefix)
+    # We could also replace the files in BUILD_PREFIX, but this is less destructive
+    def replace_build_prefix(func):
+        def wraps(*args):
+            return str(func(*args)).replace(os.environ["BUILD_PREFIX"], os.environ["PREFIX"])
+        return wraps
+    EXE._bootloader_file = replace_build_prefix(EXE._bootloader_file)
+
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 

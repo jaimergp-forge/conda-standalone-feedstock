@@ -15,8 +15,8 @@ if [[ $target_platform == osx-* && ! -f "$BUILD_PREFIX/bin/codesign" ]]; then
   ln -s /usr/bin/codesign "$BUILD_PREFIX/bin/codesign"
 fi
 
-if [[ $build_platform != $target_platform ]]; then
-  export PYTHONPATH="$PREFIX/lib/python3.9/site-packages"
+# when cross-building, we need to run build's python (but without the cross-python magic)
+if [[ $build_platform != $target_platform ]]; then  
   export PYTHON="$BUILD_PREFIX/bin/python"
 fi
 "${PYTHON}" -m PyInstaller conda.exe.spec
