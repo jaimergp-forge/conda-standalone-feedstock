@@ -1,8 +1,8 @@
-{% set version = "22.11.1.post1" %}
+{% set version = "23.5.0.post1" %}
 {% set menuinst_version = "2.0a" %}
 # g<commit hash> from https://github.com/conda/menuinst/pull/91
-{% set menuinst_build_string = "*_g324250b_41" %}
-{% set constructor_version = "3.3.1" %}
+{% set menuinst_build_string = "*_g8d47116_50" %}
+{% set constructor_version = "3.4.3" %}
 {% set python_version = "3.9.15" %}  # must match "skip: true" below
 
 package:
@@ -11,7 +11,8 @@ package:
 
 source:
   - path: ./
-  - url: https://github.com/conda/conda/archive/67da188.tar.gz
+  # Hash from https://github.com/conda/conda/pull/11882
+  - url: https://github.com/conda/conda/archive/ca65f8b.tar.gz
     folder: conda_src
     patches:
       - conda_patches/0001-Rename-and-replace-entrypoint-stub-exe.patch
@@ -20,7 +21,7 @@ source:
     folder: constructor
 
 build:
-  number: 5
+  number: 0
   skip: true  # [py != 39]
   ignore_run_exports:
     - '*'

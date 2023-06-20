@@ -3,7 +3,7 @@ cdt_name:
 channel_sources:
 - napari/label/bundle_tools_2,conda-forge
 channel_targets:
-- napari bundle_tools_2
+- napari bundle_tools_3
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 pin_run_as_build:

@@ -1,7 +1,7 @@
 channel_sources:
 - napari/label/bundle_tools_2,conda-forge
 channel_targets:
-- napari bundle_tools_2
+- napari bundle_tools_3
 pin_run_as_build:
   python:
     min_pin: x.x
