@@ -1,7 +1,7 @@
 {% set version = "23.5.0.post1" %}
 {% set menuinst_version = "2.0a" %}
 # g<commit hash> from https://github.com/conda/menuinst/pull/91
-{% set menuinst_build_string = "*_g8d47116_50" %}
+{% set menuinst_build_string = "*_gd374862_51" %}
 {% set constructor_version = "3.4.3" %}
 {% set python_version = "3.9.15" %}  # must match "skip: true" below
 
