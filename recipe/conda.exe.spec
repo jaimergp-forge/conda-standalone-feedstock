@@ -23,7 +23,7 @@ extra_exe_kwargs = {}
 # Format a list of tuples like (file-path, target-DIRECTORY)
 binaries = []
 datas = [
-    (os.path.join(sitepackages, 'menuinst', 'data', 'menuinst.menu_item.default.json'), 'menuinst/data'),
+    (os.path.join(sitepackages, 'menuinst', 'data', 'menuinst.default.json'), 'menuinst/data'),
     (os.path.join(sitepackages, 'menuinst', 'data', 'menuinst.schema.json'), 'menuinst/data'),
 ]
 if sys.platform == "win32":
@@ -35,6 +35,8 @@ elif sys.platform == "darwin":
     datas += [
         (os.path.join(sitepackages, 'menuinst', 'data', 'osx_launcher_arm64'), 'menuinst/data'),
         (os.path.join(sitepackages, 'menuinst', 'data', 'osx_launcher_x86_64'), 'menuinst/data'),
+        (os.path.join(sitepackages, 'menuinst', 'data', 'appkit_launcher_arm64'), 'menuinst/data'),
+        (os.path.join(sitepackages, 'menuinst', 'data', 'appkit_launcher_x86_64'), 'menuinst/data'),
     ]
     target_platform = os.environ.get("target_platform")
     if target_platform and target_platform != os.environ.get("build_platform"):
