@@ -51,12 +51,12 @@ test:
     - ${PREFIX}/standalone_conda/conda.exe -V    # [unix]
     - ${PREFIX}/standalone_conda/conda.exe python -V    # [unix]
     - ${PREFIX}/standalone_conda/conda.exe create -y -p ./env_test zlib tqdm python={{python_version}}  # [unix]
-    - ${PREFIX}/standalone_conda/conda.exe install -y -p ./env_test napari-menu --no-deps --repodata-fn repodata.json  # [unix]
+    - ${PREFIX}/standalone_conda/conda.exe create -y -p ./env_test_2 napari-menu --no-deps --repodata-fn repodata.json  # [unix]
     - set "CONDA_SOLVER=classic"  # [win]
     - '%PREFIX%\standalone_conda\conda.exe -V'    # [win]
     - '%PREFIX%\standalone_conda\conda.exe python -V'    # [win]
     - '%PREFIX%\standalone_conda\conda.exe create -y -p env_test zlib tqdm python={{python_version}}'    # [win]
-    - '%PREFIX%\standalone_conda\conda.exe install -y -p env_test napari-menu --no-deps --repodata-fn repodata.json'  # [win]
+    - '%PREFIX%\standalone_conda\conda.exe create -y -p env_test_2 napari-menu --no-deps --repodata-fn repodata.json'  # [win]
 
 about:
   home: https://github.com/AnacondaRecipes/conda-standalone-feedstock
