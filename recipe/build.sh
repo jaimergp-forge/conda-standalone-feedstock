@@ -2,7 +2,7 @@ set -euxo pipefail
 
 # patched conda files
 # new files in patches need to be added here
-for fname in "core/path_actions.py" "utils.py"; do
+for fname in "core/path_actions.py" "utils.py" "deprecations.py"; do
   mv "$SP_DIR/conda/${fname}" "$SP_DIR/conda/${fname}.bak"
   cp "conda_src/conda/${fname}" "$SP_DIR/conda/${fname}"
 done
@@ -19,7 +19,8 @@ fi
 if [[ $build_platform != $target_platform ]]; then  
   export PYTHON="$BUILD_PREFIX/bin/python"
 fi
-"${PYTHON}" -m PyInstaller conda.exe.spec
+# Try several times to work around intermittent failures when cross-compiling
+"${PYTHON}" -m PyInstaller conda.exe.spec  || "${PYTHON}" -m PyInstaller conda.exe.spec  || "${PYTHON}" -m PyInstaller conda.exe.spec
 mkdir -p "$PREFIX/standalone_conda"
 mv dist/conda.exe "$PREFIX/standalone_conda"
 # clean up .pyc files that pyinstaller creates
