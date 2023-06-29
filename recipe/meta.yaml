@@ -1,4 +1,4 @@
-{% set version = "23.5.0.post2" %}
+{% set version = "23.5.0.post1" %}
 {% set menuinst_version = "2.0a" %}
 # g<commit hash> from https://github.com/conda/menuinst/pull/91
 {% set menuinst_build_string = "*_g237e259_60" %}
@@ -24,7 +24,7 @@ source:
     folder: constructor
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py != 39]
   ignore_run_exports:
     - '*'
