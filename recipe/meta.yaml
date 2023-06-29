@@ -1,7 +1,7 @@
 {% set version = "23.5.0.post1" %}
 {% set menuinst_version = "2.0a" %}
 # g<commit hash> from https://github.com/conda/menuinst/pull/91
-{% set menuinst_build_string = "*_gd374862_51" %}
+{% set menuinst_build_string = "*_g237e259_60" %}
 {% set constructor_version = "3.4.3" %}
 {% set python_version = "3.9.15" %}  # must match "skip: true" below
 # pin to 5.7 because later versions make cross-compiling fail due to a problem with the struct extension
