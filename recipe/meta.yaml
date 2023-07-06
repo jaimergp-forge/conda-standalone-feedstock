@@ -24,7 +24,7 @@ source:
     folder: constructor
 
 build:
-  number: 2
+  number: 3
   skip: true  # [py != 39]
   ignore_run_exports:
     - '*'
