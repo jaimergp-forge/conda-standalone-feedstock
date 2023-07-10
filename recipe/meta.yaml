@@ -1,4 +1,4 @@
-{% set version = "23.5.0.post1" %}
+{% set version = "23.5.0.post2" %}
 {% set menuinst_version = "2.0a" %}
 # g<commit hash> from https://github.com/conda/menuinst/pull/91
 {% set menuinst_build_string = "*_g23c580b_67" %}
@@ -14,7 +14,7 @@ package:
 source:
   - path: ./
   # Hash from https://github.com/conda/conda/pull/11882
-  - url: https://github.com/conda/conda/archive/ca65f8b.tar.gz
+  - url: https://github.com/conda/conda/archive/616f161.tar.gz
     folder: conda_src
     patches:
       - conda_patches/0001-Rename-and-replace-entrypoint-stub-exe.patch
@@ -24,7 +24,7 @@ source:
     folder: constructor
 
 build:
-  number: 3
+  number: 0
   skip: true  # [py != 39]
   ignore_run_exports:
     - '*'
